@@ -1,0 +1,113 @@
+p4-theory
+
+Perfect 👍 — this is your **Minimax Algorithm with Alpha-Beta Pruning** code (used in AI game decision-making like chess or tic-tac-toe).
+
+You want a **short example input and output** that you can easily **type in the terminal** during your practical.
+
+Let’s go step-by-step 👇
+
+---
+
+## 🧠 **Short Theory for Viva**
+
+### 🎯 **Aim:**
+
+To find the **best (optimal) move** for a player in a game using the **Minimax algorithm with Alpha-Beta pruning**.
+
+---
+
+### 💡 **Concept in Simple English:**
+
+* **Minimax:**
+
+  * A game tree algorithm that chooses the **best move** assuming the opponent also plays perfectly.
+  * **Maximizer** tries to get the **highest value**,
+  * **Minimizer** tries to get the **lowest value**.
+
+* **Alpha-Beta Pruning:**
+
+  * It **cuts off** parts of the tree that won’t affect the final decision.
+  * **Alpha** → Best value that the maximizer can guarantee.
+  * **Beta** → Best value that the minimizer can guarantee.
+  * If `beta <= alpha`, pruning happens (no need to check further).
+
+---
+
+## 💻 **Code (as given)**
+
+```python
+# Simple Minimax Algorithm with Alpha-Beta Pruning
+
+def minimax(depth, index, isMax, values, alpha, beta):
+    # Base case: return leaf node value
+    if depth == 3:
+        return values[index]
+
+    if isMax:
+        best = float('-inf')
+        for i in range(2):
+            val = minimax(depth + 1, index * 2 + i, False, values, alpha, beta)
+            best = max(best, val)
+            alpha = max(alpha, best)
+            if beta <= alpha:  # Beta cut-off
+                break
+        return best
+    else:
+        best = float('inf')
+        for i in range(2):
+            val = minimax(depth + 1, index * 2 + i, True, values, alpha, beta)
+            best = min(best, val)
+            beta = min(beta, best)
+            if beta <= alpha:  # Alpha cut-off
+                break
+        return best
+
+# Main Program
+values = list(map(int, input("Enter 8 leaf node values separated by spaces: ").split()))
+result = minimax(0, 0, True, values, float('-inf'), float('inf'))
+print("The optimal value is:", result)
+```
+
+---
+
+## 🧩 **Example Input and Output (for Terminal)**
+
+### 🖥️ Input:
+
+```
+Enter 8 leaf node values separated by spaces: 3 5 6 9 1 2 0 -1
+```
+
+### ✅ Output:
+
+```
+The optimal value is: 5
+```
+
+---
+
+### 🧠 **Explanation (Simple Words)**
+
+Here’s what happens internally:
+
+* The algorithm explores a **binary game tree** of depth 3.
+* Leaf values are `[3, 5, 6, 9, 1, 2, 0, -1]`.
+* It applies **maximizing and minimizing** turns alternately.
+* Using **Alpha-Beta pruning**, it skips unnecessary branches.
+* The **best possible score** for the maximizer (AI) is **5**.
+
+---
+
+## 🎓 **Viva Key Points**
+
+| Question                   | Simple Answer                                                      |
+| -------------------------- | ------------------------------------------------------------------ |
+| What is Minimax?           | It’s an algorithm to find the best move in two-player games.       |
+| What are Alpha and Beta?   | Alpha = best value for maximizer; Beta = best value for minimizer. |
+| What is pruning?           | Skipping parts of the search tree that don’t affect the result.    |
+| Why do we use it?          | To make Minimax faster by avoiding useless paths.                  |
+| What does the output mean? | The best (optimal) score the maximizer can achieve.                |
+
+---
+
+Would you like me to show **another example with different leaf values** (to see how output changes)?

@@ -1,0 +1,206 @@
+pr-1 theory
+
+Sure! Let’s make this program **shorter**, easier to understand, and **viva-ready** — with **line-by-line explanation** and comments in **simple English** ✅
+
+---
+
+### 💻 Simplified Code with Comments
+
+```python
+from collections import deque   # Importing deque (double-ended queue) for BFS
+
+# Function to create an undirected graph
+def create_graph():
+    graph = {}  # Empty dictionary to store graph (Adjacency List)
+    n = int(input("Enter number of vertices: "))  
+    print("Enter vertex names (like A, B, C...):")
+    vertices = [input().strip() for _ in range(n)]  # Take vertex names
+
+    # Initialize graph with empty lists for each vertex
+    for v in vertices:
+        graph[v] = []
+
+    e = int(input("Enter number of edges: "))
+    print("Enter each edge (example: A B means edge between A and B):")
+    for _ in range(e):
+        u, v = input().split()
+        graph[u].append(v)
+        graph[v].append(u)  # Since graph is undirected
+
+    return graph
+
+
+# Recursive DFS (Depth First Search)
+def dfs(node, visited, graph):
+    if node not in visited:           # Visit node if not already visited
+        print(node, end=' ')
+        visited.add(node)             # Mark node as visited
+        for n in graph[node]:         # Visit all connected (neighbor) nodes
+            dfs(n, visited, graph)
+
+
+# BFS (Breadth First Search) using queue
+def bfs(start, graph):
+    visited = set()                   # To track visited nodes
+    q = deque([start])                # Initialize queue with start node
+
+    while q:                          # Repeat until queue is empty
+        node = q.popleft()            # Remove first element
+        if node not in visited:
+            print(node, end=' ')
+            visited.add(node)
+            for n in graph[node]:
+                if n not in visited:
+                    q.append(n)       # Add unvisited neighbors to queue
+
+
+# ---------------- MAIN PROGRAM ----------------
+graph = create_graph()                # Build the graph
+start = input("Enter starting node: ").strip()
+
+print("\nDFS Traversal:")
+dfs(start, set(), graph)
+
+print("\nBFS Traversal:")
+bfs(start, graph)
+```
+
+---
+
+### 🧠 Line-by-Line Explanation (Viva-Ready)
+
+| Line  | Code / Concept                                                                                          | Explanation                                                 |
+| ----- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| 1     | `from collections import deque`                                                                         | Imports `deque`, a fast queue used in BFS.                  |
+| 4     | `graph = {}`                                                                                            | Creates an empty dictionary for the graph.                  |
+| 5     | `n = int(input(...))`                                                                                   | Takes number of vertices (nodes).                           |
+| 6     | `vertices = [input().strip() for _ in range(n)]`                                                        | Takes names of vertices (like A, B, C).                     |
+| 9     | `graph[v] = []`                                                                                         | Initializes each vertex with an empty list (for neighbors). |
+| 11    | `e = int(input(...))`                                                                                   | Takes number of edges.                                      |
+| 13–16 | Adds connections between two vertices (u and v). Since it’s **undirected**, both directions are stored. |                                                             |
+| 21    | `def dfs(...)`                                                                                          | Defines **DFS** function (recursive).                       |
+| 22    | `if node not in visited:`                                                                               | Checks if the node is already visited.                      |
+| 23–26 | Prints current node, marks visited, then visits all its neighbors.                                      |                                                             |
+| 31    | `def bfs(...)`                                                                                          | Defines **BFS** function.                                   |
+| 32    | `visited = set()`                                                                                       | Keeps track of visited nodes.                               |
+| 33    | `q = deque([start])`                                                                                    | Queue starts with the first node.                           |
+| 35–42 | Removes a node, prints it, marks visited, and adds all unvisited neighbors to queue.                    |                                                             |
+| 47    | `graph = create_graph()`                                                                                | Builds the graph based on user input.                       |
+| 48    | `start = input(...)`                                                                                    | Takes the starting node for traversal.                      |
+| 50–51 | Runs and prints **DFS** and **BFS** traversals.                                                         |                                                             |
+
+---
+
+### ⚡ Short Summary for Viva
+
+* **DFS (Depth First Search)**:
+  → Goes deep along one path before backtracking.
+  → Implemented using **recursion or stack**.
+
+* **BFS (Breadth First Search)**:
+  → Visits all neighbors first before moving deeper.
+  → Implemented using a **queue (deque)**.
+
+* **Graph representation**:
+  → Uses **Adjacency List** (dictionary with list of neighbors).
+
+---
+
+Would you like me to make an **even shorter version** (minimal for practical execution)?
+
+
+
+Excellent question 👍 Let’s go step by step!
+
+---
+
+## 🧩 Example Run and Output
+
+Let’s say you enter these inputs 👇
+
+### 🖥️ **Program Input**
+
+```
+Enter number of vertices: 4
+Enter vertex names (like A, B, C...):
+A
+B
+C
+D
+Enter number of edges: 4
+Enter each edge (example: A B means edge between A and B):
+A B
+A C
+B D
+C D
+Enter starting node: A
+```
+
+---
+
+### ✅ **Output**
+
+```
+DFS Traversal:
+A B D C
+
+BFS Traversal:
+A B C D
+```
+
+---
+
+### 🧠 How the Graph Looks (Adjacency List)
+
+| Vertex | Connected To |
+| :----- | :----------- |
+| A      | B, C         |
+| B      | A, D         |
+| C      | A, D         |
+| D      | B, C         |
+
+So, it forms connections like this:
+
+```
+   A
+  / \
+ B   C
+  \ /
+   D
+```
+
+---
+
+## 🔢 How Many Edges Are Possible?
+
+If a graph is **undirected** and has **n vertices**,
+then **maximum possible edges** (without repeating or self-loops) is given by:
+
+[
+\text{Max edges} = \frac{n \times (n - 1)}{2}
+]
+
+### So for 4 vertices:
+
+[
+= \frac{4 \times 3}{2} = 6
+]
+
+👉 That means **maximum 6 edges** can exist in a 4-vertex undirected graph.
+(If it were **directed**, max edges would be ( n \times (n - 1) = 12 )).
+
+---
+
+### 💡 Quick Recap for Viva
+
+| Concept                    | Explanation                         |
+| -------------------------- | ----------------------------------- |
+| **Vertices (n)**           | Number of nodes (e.g., A, B, C, D)  |
+| **Edges (e)**              | Connections between two vertices    |
+| **Max edges (undirected)** | n(n−1)/2                            |
+| **DFS**                    | Goes deep — A → B → D → C           |
+| **BFS**                    | Goes level by level — A → B → C → D |
+
+---
+
+Would you like me to show **example output for 5 vertices** too (to show more BFS/DFS variety)?

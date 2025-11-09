@@ -1,0 +1,153 @@
+Perfect 👍 — this is your **N-Queens problem code**, and you want it in **simple daily English** for your **viva** with **comments** and **clear theory**.
+
+Let’s go step by step 👇
+
+---
+
+## 🧠 **Theory (Simple English for Viva)**
+
+### 🎯 **Aim:**
+
+To place **N queens** on an **N×N chessboard** so that no two queens attack each other.
+
+---
+
+### 💡 **Concept:**
+
+* In chess, a **queen** can attack another queen **vertically**, **horizontally**, or **diagonally**.
+* The goal is to **place all queens safely** so that no two queens can attack each other.
+
+---
+
+### ⚙️ **Method Used:**
+
+We use **recursion and backtracking**:
+
+1. Place a queen in a position.
+2. Check if it’s safe (no attack).
+3. If safe → move to the next queen.
+4. If not → remove (backtrack) and try another position.
+
+This continues until all queens are safely placed.
+
+---
+
+### 🧾 **Applications:**
+
+* Solving puzzles and optimization problems.
+* Used in AI search algorithms and constraint satisfaction problems.
+
+---
+
+## 💻 **Code with Simple English Comments**
+
+```python
+# Practical No. 3 : N-Queens Problem
+
+# Ask user for the number of queens
+print("Enter the number of queens")
+N = int(input())  # Example: if user enters 4, it means a 4x4 chessboard
+
+# Create a chessboard (NxN matrix) filled with 0
+# 0 means empty, 1 means a queen is placed
+board = [[0]*N for _ in range(N)]
+
+# Function to check if a queen can be safely placed at position (i, j)
+def attack(i, j):
+    # Check same row and same column
+    for k in range(0, N):
+        if board[i][k] == 1 or board[k][j] == 1:
+            return True  # Not safe (queen already attacking)
+    
+    # Check diagonals
+    for k in range(0, N):
+        for l in range(0, N):
+            # For diagonals, sum or difference of indexes are equal
+            if (k + l == i + j) or (k - l == i - j):
+                if board[k][l] == 1:
+                    return True  # Not safe (queen attacking diagonally)
+    
+    return False  # Safe position, no attack found
+
+
+# Function to place N queens using recursion
+def N_queens(n):
+    # If all queens are placed, return True (solution found)
+    if n == 0:
+        return True
+    
+    # Try placing queen in all cells
+    for i in range(0, N):
+        for j in range(0, N):
+            # If position is safe and empty
+            if not attack(i, j) and board[i][j] != 1:
+                board[i][j] = 1  # Place queen
+                if N_queens(n - 1):  # Recur for remaining queens
+                    return True
+                board[i][j] = 0  # Backtrack (remove queen if not safe)
+    
+    return False  # No safe position found
+
+
+# Call the function to solve N-Queens
+N_queens(N)
+
+# Print final chessboard
+# 1 represents queen's position, 0 means empty space
+for i in board:
+    print(i)
+```
+
+---
+
+## 🧩 **Example Input and Output**
+
+### 🖥️ Input:
+
+```
+Enter the number of queens
+4
+```
+
+### ✅ Output:
+
+```
+[0, 1, 0, 0]
+[0, 0, 0, 1]
+[1, 0, 0, 0]
+[0, 0, 1, 0]
+```
+
+---
+
+### 🧩 **Explanation of Output:**
+
+Each `1` shows where a **queen** is placed.
+No two queens attack each other — they are all safe.
+
+So visually, for 4 queens:
+
+```
+. Q . .
+. . . Q
+Q . . .
+. . Q .
+```
+
+(`Q` = queen, `.` = empty square)
+
+---
+
+## 🎓 **Viva-Ready Summary**
+
+| Question                      | Simple Answer                                                                  |
+| ----------------------------- | ------------------------------------------------------------------------------ |
+| What is the N-Queens problem? | Placing N queens on an N×N chessboard so that no two queens attack each other. |
+| What technique is used?       | Recursion and Backtracking.                                                    |
+| What does backtracking mean?  | Trying all possibilities, and going back when a choice fails.                  |
+| What do 0 and 1 represent?    | 0 = empty cell, 1 = queen placed.                                              |
+| How does it check attacks?    | It checks rows, columns, and both diagonals.                                   |
+
+---
+
+Would you like me to show a **shorter version of this code** (same output but easier for typing during practical)?

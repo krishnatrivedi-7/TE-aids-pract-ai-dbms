@@ -1,0 +1,116 @@
+p5-theory
+
+
+Sure 😊
+Here’s a **simple explanation with comments** and **easy viva theory** for your **Prim’s Algorithm (Greedy Search)** code.
+
+---
+
+## 🧾 **Code with Explanation (with Comments)**
+
+```python
+# Prim’s Algorithm to find Minimum Spanning Tree (MST)
+
+# Step 1: Take number of vertices as input
+n = int(input("Enter number of vertices: "))
+
+# Step 2: Take adjacency matrix as input (0 means no edge)
+print("Enter the adjacency matrix (use 0 for no edge):")
+g = [list(map(int, input().split())) for _ in range(n)]
+
+# Step 3: Create a list to keep track of selected vertices
+selected = [0]*n
+selected[0] = 1   # Start from the first vertex
+edges, cost = 0, 0
+
+# Step 4: Loop until we have (n-1) edges in MST
+while edges < n-1:
+    m = 99999      # Set a large number as infinity
+    x = y = 0       # Variables to store edge positions
+
+    # Step 5: Check all edges from selected to unselected vertices
+    for i in range(n):
+        if selected[i]:
+            for j in range(n):
+                if not selected[j] and g[i][j]:
+                    if m > g[i][j]:     # If smaller edge found
+                        m = g[i][j]
+                        x, y = i, j
+
+    # Step 6: Print chosen edge and add cost
+    print(f"Edge {x}-{y} cost: {g[x][y]}")
+    cost += g[x][y]
+    selected[y] = 1      # Mark this vertex as selected
+    edges += 1           # Increase edge count
+
+# Step 7: Print total cost of MST
+print("Total cost of MST:", cost)
+```
+
+---
+
+## 🧠 **Theory for Viva (in Simple English)**
+
+### 🔹 **Aim:**
+
+To implement **Prim’s Algorithm** using the **Greedy Method** to find a **Minimum Spanning Tree (MST)** of a connected graph.
+
+---
+
+### 🔹 **What is MST (Minimum Spanning Tree)?**
+
+* A *spanning tree* is a subset of the graph that connects all vertices with the **minimum number of edges** and **no cycles**.
+* *Minimum Spanning Tree* is the spanning tree with the **smallest total edge cost**.
+
+---
+
+### 🔹 **About Prim’s Algorithm:**
+
+* It’s a **Greedy Algorithm** — meaning it always chooses the **minimum cost edge** that connects a **new vertex** to the growing tree.
+* It starts from any vertex and keeps adding the **cheapest edge** that doesn’t form a cycle until all vertices are included.
+
+---
+
+### 🔹 **Steps of Prim’s Algorithm:**
+
+1. Start from any vertex (here, vertex 0).
+2. Find all edges that connect the selected vertex to unselected ones.
+3. Choose the edge with the **smallest weight**.
+4. Add the connected vertex to the MST.
+5. Repeat steps 2–4 until all vertices are included.
+
+---
+
+### 🔹 **Time Complexity:**
+
+* **O(V²)** for adjacency matrix implementation.
+
+---
+
+### 🔹 **Output Example:**
+
+```
+Enter number of vertices: 4
+Enter the adjacency matrix (use 0 for no edge):
+0 2 0 6
+2 0 3 8
+0 3 0 0
+6 8 0 0
+Edge 0-1 cost: 2
+Edge 1-2 cost: 3
+Edge 0-3 cost: 6
+Total cost of MST: 11
+```
+
+---
+
+### 🔹 **Key Points for Viva:**
+
+* Prim’s algorithm builds the MST **step by step**.
+* It uses **greedy choice** to pick the **lowest cost edge**.
+* It ensures **no cycles** are formed.
+* It is used in **network design** problems like laying cables or road connections.
+
+---
+
+Would you like me to make a **2–3 line short viva summary answer** (to memorize easily)?

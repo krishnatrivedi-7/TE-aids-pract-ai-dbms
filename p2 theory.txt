@@ -1,0 +1,137 @@
+Perfect — let’s prepare this for your **viva** 🎓
+
+Below, you’ll get:
+1️⃣ A **simple English theory** of A* algorithm
+2️⃣ The **same code** explained with **clear comments line-by-line**
+
+---
+
+## 🧠 **Theory (Simple English for Viva)**
+
+The **A* (A-star) algorithm** is a **pathfinding algorithm** used to find the **shortest path** between a start node and a goal node in a graph.
+
+It combines:
+
+* **Dijkstra’s Algorithm** (which finds the shortest path)
+* **Heuristic Search** (which guesses how close we are to the goal)
+
+👉 A* uses two main cost values:
+
+* **g(n):** Actual cost from the start node to the current node
+* **h(n):** Heuristic cost — estimated cost from the current node to the goal
+* **f(n) = g(n) + h(n):** Total estimated cost
+
+A* chooses the node with the **lowest f(n)** value at each step.
+It continues until it reaches the goal and returns the **shortest possible path**.
+
+✅ **Key Points for Viva:**
+
+* A* is both **fast** and **optimal** (if heuristic is accurate).
+* It is used in **maps, games, and robotics** for route planning.
+* Heuristic helps reduce the search area.
+
+---
+
+## 💻 **Code with Comments and Explanation**
+
+```python
+def a_star(graph, start, goal, h):
+    open_set = {start}                       # Nodes to explore
+    came = {}                                # Keeps track of each node's parent
+    g = {n: float('inf') for n in graph}     # Actual cost from start to each node
+    f = {n: float('inf') for n in graph}     # Estimated total cost (f = g + h)
+    g[start] = 0                             # Cost to reach start = 0
+    f[start] = h[start]                      # f = g + h (0 + heuristic value)
+
+    while open_set:                          # While nodes are left to explore
+        n = min(open_set, key=lambda x: f[x]) # Choose node with smallest f-score
+
+        if n == goal:                        # If goal found → reconstruct path
+            path = [n]
+            while n in came:                 # Backtrack using parent map
+                n = came[n]
+                path.append(n)
+            return path[::-1]                # Return path from start to goal
+
+        open_set.remove(n)                   # Mark node as explored
+
+        for nb, cost in graph[n].items():    # Go through all neighbors of node
+            t = g[n] + cost                  # Calculate new path cost
+            if t < g[nb]:                    # If new path is better
+                came[nb] = n                 # Record parent
+                g[nb] = t                    # Update g-score
+                f[nb] = t + h[nb]            # Update f-score
+                open_set.add(nb)              # Add neighbor to explore next
+
+# ---------- USER INPUT PART ----------
+n = int(input("Enter number of nodes: "))    # Take number of nodes
+graph = {}
+
+for _ in range(n):                           # For each node, get its neighbors
+    node = input("Enter node name: ")
+    edges = input(f"Enter neighbors and costs for {node} (e.g. B:2 C:4): ").split()
+    graph[node] = {e.split(':')[0]: int(e.split(':')[1]) for e in edges}
+
+h = {}                                       # Get heuristic values for each node
+print("Enter heuristic values (node value):")
+for node in graph:
+    h[node] = int(input(f"{node}: "))
+
+start = input("Enter start node: ")          # Starting point
+goal = input("Enter goal node: ")            # Destination point
+
+print("Shortest Path:", a_star(graph, start, goal, h))   # Call A* and print result
+```
+
+---
+
+## 🧩 Example Input and Output (for Terminal)
+
+### 🖥️ Input:
+
+```
+Enter number of nodes: 6
+Enter node name: A
+Enter neighbors and costs for A (e.g. B:2 C:4): B:1 C:3
+Enter node name: B
+Enter neighbors and costs for B (e.g. B:2 C:4): A:1 D:3 E:1
+Enter node name: C
+Enter neighbors and costs for C (e.g. B:2 C:4): A:3 F:5
+Enter node name: D
+Enter neighbors and costs for D (e.g. B:2 C:4): B:3
+Enter node name: E
+Enter neighbors and costs for E (e.g. B:2 C:4): B:1 F:2
+Enter node name: F
+Enter neighbors and costs for F (e.g. B:2 C:4): C:5 E:2
+Enter heuristic values (node value):
+A: 7
+B: 6
+C: 2
+D: 5
+E: 1
+F: 0
+Enter start node: A
+Enter goal node: F
+```
+
+### ✅ Output:
+
+```
+Shortest Path: ['A', 'B', 'E', 'F']
+```
+
+---
+
+## 💡 **Short Viva Summary**
+
+| Term         | Meaning                                           |
+| ------------ | ------------------------------------------------- |
+| **A***       | Finds shortest path using actual + estimated cost |
+| **g(n)**     | Cost from start to current node                   |
+| **h(n)**     | Heuristic estimate to goal                        |
+| **f(n)**     | Total cost = g + h                                |
+| **Use case** | GPS navigation, AI pathfinding, robotics          |
+
+---
+
+Would you like me to add a **diagram** showing how A* explores nodes step by step (for visual explanation in viva)?
